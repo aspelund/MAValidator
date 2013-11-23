@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>MAValidator test</title>
+    <link rel="stylesheet" href="http://code.jquery.com/qunit/qunit-1.12.0.css">
+</head>
+<body>
+<div id="qunit"></div>
+<div id="qunit-fixture"></div>
+<script src="http://codeorigin.jquery.com/jquery-2.0.3.min.js"></script>
+<script src="MADeferred.js"></script>
+<script src="MAValidator.js"></script>
+<script src="http://code.jquery.com/qunit/qunit-1.12.0.js"></script>
+
+<form id="test1">
+    <input data-validation="required,email">
+</form>
+
+<form id="test2">
+    <input type="text" data-validation="required,validEmail" value="asdasdads">
+</form>
+<form id="test3">
+    <input type="text" data-validation="required,alwaysFail" value="asdasdads">
+</form>
+<form id="test4">
+    <input type="text" data-validation="required,validEmail" value="info@example.com">
+</form>
+<form id="test5">
+    <input type="text" data-validation="required,password" value="info@example.com">
+</form>
+<input id="test6" type="text" data-validation="required,password" value="asdasdasd1">
+<input id="test7" type="text" data-validation="required,personalNumber" value="111212-1122">
+<input id="test8" type="text" data-validation="required,personalNumber" value="11ss12-1122">
+<script>
+    test("Skip empty fields for validation on change", function(){
+        var ok = false;
+        var testValidator = new MAValidator();
+        testValidator.validateElement($("#test1 input"))
+                .then(function(){
+                    ok = true;
+                });
+        equal(ok, true);
+    });
+    test("Resolve well formed email", function(){
+        var ok = false;
+        var testValidator = new MAValidator();
+        testValidator.validateElement($("#test4 input"))
+                .then(function(){
+                    ok = true;
+                });
+        equal(ok, true);
+    });
+
+    test("Reject malformed email", function(){
+        var ok = true;
+        var testValidator = new MAValidator();
+        testValidator.validateElement($("#test2 input"))
+                    .fail(function(){
+                        ok = false;
+                    });
+        equal(ok, false);
+    });
+
+    test("Always failing test", function(){
+        var ok = true;
+        var testValidator = new MAValidator();
+        testValidator.validateElement($("#test3 input"))
+                .fail(function(){
+                    ok = false;
+                });
+        equal(ok, false);
+    });
+
+    test("Malformed password", function(){
+        var ok = true;
+        var testValidator = new MAValidator();
+        testValidator.validateElement($("#test5 input"))
+                .fail(function(){
+                    ok = false;
+                });
+        equal(ok, false);
+    });
+    test("Well formed password", function(){
+        var ok = false;
+        var testValidator = new MAValidator();
+        testValidator.validateElement($("#test6"))
+                .then(function(){
+                    ok = true;
+                });
+        equal(ok, true);
+    });
+    test("Well formed personal number", function(){
+        var ok = false;
+        var testValidator = new MAValidator();
+        testValidator.validateElement($("#test7"))
+                .then(function(){
+                    ok = true;
+                });
+        equal(ok, true);
+    });
+    test("Malformed personal number", function(){
+        var ok = true;
+        var testValidator = new MAValidator();
+        testValidator.validateElement($("#test8"))
+                .fail(function(){
+                    ok = false;
+                });
+        equal(ok, false);
+    });
+    
+</script>
+</body>
+</html>
