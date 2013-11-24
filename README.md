@@ -4,12 +4,17 @@ MAValidator
 Small javascript validation library that is easy to use for async validation and validation chains. Uses MADeferred.
 
 Here is an example validation for immediate validation after a input field has changed:
+```html
+
+<form>
+        <input type='text' name='email' data-validation='required,email'/>
+</form>
+```
+Elements are validated from the comma separated list of validators attribute ```data-validation```.
 ```javascript
         var validator = new MAValidator();
         $("#myForm input").change(function(){
-            var element = this;
-            clearSignsForElement(element);
-            if($(element).val().length>0){
+                var element = this;
                 var promise = validator.validateElement(element, false);
                 promise.then(function(){
                     successFunction(element);
@@ -23,22 +28,19 @@ Here is an example validation for immediate validation after a input field has c
                     var removeLoader = addLoader(element);
                     promise.always(removeLoader);
                 }
-            }
         });
 ```
 And here is an example validation for submit:
 ```javascript
         $("#myForm #btnNext").click(function(){
-            var promise = step1Validator.validateForSubmit($("#myForm input"));
-            // The good thing here is that if we have async validations to be made,
-            // we still wait for them.
-            promise.then(function(){
-                $("#josForm input").unbind();
-                showStep2();
-            })
+                var promise = step1Validator.validateForSubmit($("#myForm input"));
+                // The good thing here is that if we have async validations to be made,
+                // we still wait for them.
+                promise.then(function(){
+                        // Success - Now do something
+                })
                 .fail(function(message){
-                    addBubble(message, promise.deferredObject.errorElement);
-                    errorFunction(promise.deferredObject.errorElement, message)
+                        // Fail - Now what?
                 });
         });
 ```
