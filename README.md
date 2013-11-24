@@ -1,7 +1,9 @@
 MAValidator
 ===========
+The objective for this minimal library was to be able to easily validate html forms. The forms should be validated both immediately after input is done (i.e. the user has written an email and the input looses input) as well as before a submit of a form is done.
+Moreover, I wanted the validator work with asynchronous and sychronous tests, and I wanted to be able to give the user instant feedback on the data entered, without having to mess with io in the validator itself.
 
-Small javascript validation library that is easy to use for async validation and validation chains. Uses MADeferred (see https://github.com/aspelund/MADeferred/) and jQuery.
+Uses MADeferred (see https://github.com/aspelund/MADeferred/) and jQuery.
 
 Here is an example validation for immediate validation after a input field has changed:
 ```html
