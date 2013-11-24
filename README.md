@@ -8,12 +8,13 @@ Here is an example validation for immediate validation after a input field has c
 
 <form>
         <input type='text' name='email' data-validation='required,email'/>
+        <button>Send</button>
 </form>
 ```
 Elements are validated from the comma separated list of validators attribute ```data-validation```.
 ```javascript
         var validator = new MAValidator();
-        $("#myForm input").change(function(){
+        $("form input").change(function(){
                 var element = this;
                 var promise = validator.validateElement(element, false);
                 promise.then(function(){
@@ -32,7 +33,7 @@ Elements are validated from the comma separated list of validators attribute ```
 ```
 And here is an example validation for submit:
 ```javascript
-        $("#myForm #btnNext").click(function(){
+        $("form button").click(function(){
                 var promise = step1Validator.validateForSubmit($("#myForm input"));
                 // The good thing here is that if we have async validations to be made,
                 // we still wait for them.
