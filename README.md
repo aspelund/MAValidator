@@ -1,7 +1,7 @@
 MAValidator
 ===========
 
-Small javascript validation library that is easy to use for async validation and validation chains. Uses MADeferred.
+Small javascript validation library that is easy to use for async validation and validation chains. Uses MADeferred (see https://github.com/aspelund/MADeferred/) and jQuery.
 
 Here is an example validation for immediate validation after a input field has changed:
 ```html
